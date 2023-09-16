@@ -32,6 +32,9 @@
   "type": "commonjs",
   "author": "cloudy233",
   "license": "MIT",
+  "dependencies": {
+    "encoding": "^0.1.13"
+  },
   "devDependencies": {
     "axios": "^1.5.0",
     "babel-core": "^6.26.3",
