@@ -14,7 +14,7 @@ const createWindow = () => {
         height: 150,
         x: screen.getPrimaryDisplay().workAreaSize.width * 0.5 - 225,
         y: 10,
-        resizable: true,
+        resizable: false,
         alwaysOnTop: true,
         webPreferences: {
             //preload: path.join(__dirname, 'preload.js'),

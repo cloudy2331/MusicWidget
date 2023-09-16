@@ -2,12 +2,13 @@ const { ipcRenderer } = require('electron')
 const http = require('http')
 const fs = require('fs')
 const { spawn, spawnSync } = require('child_process')
+const encoding = require('encoding')
 
 let json
 let obj
 let dataCount = 0
 var coreResult = ''
-const textDecoder = new TextDecoder()
+//const textDecoder = new TextDecoder('gb2312')
 
 $(document).ready(() => {
     setInterval(IconControl, 100)
@@ -39,13 +40,16 @@ $(document).ready(() => {
 
         child.stdout.on('data', (data) => {
             //coreResult = textDecoder.decode(data)
-            var splitResult = data.toString()
+            //var splitResult = data.toString()
+            //var splitResult = textDecoder.decode(data)
+            var splitResult = encoding.convert(data, 'UTF8', 'GBK')
+            splitResult = splitResult.toString()
             splitResult = splitResult.split(',')
             if (splitResult[0] == 'OnAnyMediaPropertyChanged')
             {
                 coreResult = ''
             }
-            coreResult += data.toString()
+            coreResult += encoding.convert(data, 'UTF8', 'GBK')
             console.log(coreResult)
             splitResult = coreResult.split(',')
             $('#music-source').html(` <b>·</b> ${splitResult[1]}`)

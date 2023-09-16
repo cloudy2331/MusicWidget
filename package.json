@@ -45,6 +45,7 @@
     "electron-reloader": "^1.2.3",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.4",
+    "encoding": "^0.1.13",
     "node-abi": "^3.47.0",
     "sleep": "^6.3.0",
     "windows.media": "^0.1.6"
