@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP -->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">-->
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'none'; script-src 'self'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+  </head>
+  <body>
+    <audio id="audio" src="" style="display: none;"></audio>
+    <img class="music-img" id="music-img" src=""/>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <!--
+    <div class="topBar">
+      <div id="pin" class="pin" onclick="topChange()">
+        <i class="bi bi-pin-angle" id="pin"></i>
+        <i class="bi bi-pin-angle-fill" id="pin" style="display: none;"></i>
+      </div>
+    </div>
+    -->
+
+    <span class="text" id="music-source"> <b>·</b> cloudmusic</span>
+    <br><br>
+    <span class="text" id="music-name">music-name</span>
+    <br>
+    <span class="text" id="artist">artist</span>
+    <br><br>
+    <div class="control-bar" id="control-bar">
+        <i class="bi bi-skip-start-fill"></i>
+        <i class="bi bi-rewind-fill"></i>
+        <i class="bi bi-play-fill" id="playIcon" onclick="SwitchPlayStatus()"></i>
+        <i class="bi bi-fast-forward-fill"></i>
+        <i class="bi bi-skip-end-fill"></i>
+    </div>
+
+    <script src="./render.js"></script>
+  </body>
+  <style>
+    :root{
+      --background-color-r: 231;
+      --background-color-g: 226;
+      --background-color-b: 229;
+      --background-color: rgb(0, 0, 0);
+      --text-color: white;
+    }
+
+    body{
+        background-size: auto 100vh;
+        background-repeat: no-repeat;
+        background-position-x: right;
+        background-color: var(--background-color);
+        -webkit-app-region: drag;
+    }
+
+    .control-bar{
+        display: flex;
+        flex-direction: row;
+        margin-left: 10px;
+        color: var(--text-color);
+        mix-blend-mode: difference;
+        -webkit-app-region: no-drag;
+    }
+    .control-bar i{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .music-img{
+        position: fixed;
+        right: 0;
+        top: 0; 
+        width: auto; 
+        height: 100vh;
+        mask-image: linear-gradient(to left, transparent, 20%, black);
+        -webkit-mask-image: linear-gradient(to right, transparent, 20%, black);
+    }
+
+    .text{
+        font-size: small;
+        margin-left: 10px;
+        color: var(--text-color);
+        mix-blend-mode: difference;
+        -webkit-app-region: no-drag;
+    }
+
+    .topBar{
+      position: fixed;
+      top: 0;
+      width: 100vw;
+      -webkit-app-region: no-drag;
+    }
+    .topBar #pin{
+      position: fixed;
+      font-size: small;
+      left: 1;
+      top: 0;
+    }
+  </style>
+</html>

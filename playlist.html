@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'none'; script-src 'self'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    <script src="./playlist.js"></script>
+    <title>播放列表</title>
+</head>
+
+<body>
+    <div class="searchList">
+        <div class="searchBox">
+            <input id="searchText" class="searchText">
+            <a class="searchButton" onclick="SearchMusic()">
+                <i class="bi bi-search" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="musicList" id="music_list" style="margin-top: 60px;">
+            <!--<div class="listTitle">
+                <span>名称</span>
+                <span>时长</span>
+                <span> </span>
+            </div>-->
+            <!--测试用-->
+            <div class="song">
+                <div class="musicName">
+                    <span>测试1</span>
+                </div>
+                <div class="artists">
+                    <span>测试/测试</span>
+                </div>
+                <div class="time">
+                    <span>5:03</span>
+                </div>
+                <div class="musicControl">
+                    <i class="bi bi-play-fill"></i>
+                    <i class="bi bi-plus"></i>
+                </div>
+            </div>
+            <div class="song">
+                <div class="musicName">
+                    <span>测试2</span>
+                </div>
+                <div class="time">
+                    <span>1:13</span>
+                </div>
+                <div class="musicControl">
+                    <i class="bi bi-play-fill"></i>
+                    <i class="bi bi-plus"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    .searchList {
+        width: 50vw;
+        height: 98vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .searchBox {
+        position: absolute;
+        background-color: rgb(241, 243, 244);
+        height: 30px;
+        padding: 10px;
+        border-radius: 40px;
+    }
+
+    .searchText {
+        border: none;
+        background: none;
+        outline: none;
+        float: left;
+        color: #000;
+        font-size: 16px;
+        line-height: 30px;
+        width: 300px;
+        transition: 0.4s;
+    }
+
+    .searchButton {
+        color: #e84118;
+        float: right;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgb(241, 243, 244);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .searchButton:hover {
+        background-color: #2f3640;
+    }
+
+    .musicList{
+        width: 80%;
+        height: 100%;
+    }
+
+    .song{
+        width: 100%;
+        height: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        background-color: whitesmoke;
+        margin-bottom: 10px;
+    }
+
+    .listTitle
+    {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        color: gray;
+        margin-bottom: 10px;
+    }
+</style>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'none'; script-src 'self'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    <script src="./setting.js"></script>
+    <title>设置</title>
+</head>
+<body>
+    <h1>设置</h1>
+    <div class="div-music-source">
+        <h3>音乐来源</h3>
+        <select id="music-source">
+            <option value=0>(github)Binaryify/NeteaseCloudMusicApi</option>
+            <option value=1>smtc</option>
+        </select>
+        <span>切换此项需要重启挂件窗口(smtc模式会使播放控制控件不可用)</span>
+    </div>
+    <div class="div-api">
+        <h3>API地址</h3>
+        <input type="url" id="api"/>
+    </div>
+    <div class="bottom-bar">
+        <div class="save" onclick="SaveSetting()">
+            <span>保存更改</span>
+        </div>
+    </div>
+</body>
+<style>
+    /*@media (prefers-color-scheme: dark)
+    {
+        :root
+        {
+            --background-color: black;
+            --text-color: white;
+        }
+    }
+    @media (prefers-color-scheme: light)
+    {
+        :root
+        {
+            --background-color: white;
+            --text-color: black;
+        }
+    }
+
+    body
+    {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }*/
+    .div-music-source
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .div-music-source select
+    {
+        margin-left: 10px;
+    }
+
+    .bottom-bar
+    {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
+    .save
+    {
+        display: flex;
+        width: 100px;
+        height: 30px;
+        background-color: dodgerblue;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        color: white;
+    }
+</style>
+</html>
