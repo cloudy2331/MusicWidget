@@ -12,4 +12,4 @@
 
 ## 2.SMTC核心
 ---
-具体信息请参阅
+具体信息请参阅 https://github.com/cloudy2331/SmtcNetCore
