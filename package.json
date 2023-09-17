@@ -5,7 +5,13 @@
   "main": "main.js",
   "build": {
     "productName": "music_widget",
-    "appId": "com.cloudygames.musicwidget"
+    "appId": "com.cloudygames.musicwidget",
+    "extraFiles": [
+      "./config.json",
+      "./icon.jpg",
+      "./Core"
+    ],
+    "asar": false
   },
   "files": [
     "!node_modules/**/*"
@@ -13,10 +19,6 @@
   "electronDownload": {
     "mirror": "https://npm.taobao.org/mirrors/electron/"
   },
-  "extraFiles": [
-    "./config.json",
-    "./icon.jpg"
-  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
@@ -33,6 +35,7 @@
   "author": "cloudy233",
   "license": "MIT",
   "dependencies": {
+    "colorfulimg": "^1.0.2",
     "encoding": "^0.1.13"
   },
   "devDependencies": {
@@ -41,6 +44,7 @@
     "babel-loader": "^9.1.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "colorfulimg": "^1.0.2",
     "electron": "^26.2.1",
     "electron-builder": "^24.6.4",
     "electron-devtools-installer": "^3.2.0",

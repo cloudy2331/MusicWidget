@@ -3,6 +3,7 @@ const http = require('http')
 const fs = require('fs')
 const { spawn, spawnSync } = require('child_process')
 const encoding = require('encoding')
+const colorfulimg = require('colorfulimg')
 
 let json
 let obj
@@ -45,17 +46,22 @@ $(document).ready(() => {
             var splitResult = encoding.convert(data, 'UTF8', 'GBK')
             splitResult = splitResult.toString()
             splitResult = splitResult.split(',')
-            if (splitResult[0] == 'OnAnyMediaPropertyChanged')
-            {
+            if (splitResult[0] == 'OnAnyMediaPropertyChanged') {
                 coreResult = ''
+                coreResult += encoding.convert(data, 'UTF8', 'GBK')
             }
-            coreResult += encoding.convert(data, 'UTF8', 'GBK')
-            console.log(coreResult)
-            splitResult = coreResult.split(',')
-            $('#music-source').html(` <b>·</b> ${splitResult[1]}`)
-            $('#music-name').text(splitResult[2])
-            $('#artist').text(splitResult[3])
-            SmtcImg(splitResult[4])
+            else {
+                coreResult += encoding.convert(data, 'UTF8', 'GBK')
+            }
+            if (coreResult.charAt(coreResult.length - 1) == '=') {
+                //coreResult.slice(0, -1)
+                console.log(coreResult)
+                splitResult = coreResult.split(',')
+                $('#music-source').html(` <b>·</b> ${splitResult[1]}`)
+                $('#music-name').text(splitResult[2])
+                $('#artist').text(splitResult[3])
+                SmtcImg(splitResult[4].slice(0, -1))
+            }
         })
     }
 })
@@ -103,7 +109,7 @@ function GetImg(id) {
             $('#music-img').attr('src', imgUrl)
             const musicImg = $('#music-img')[0]
             musicImg.addEventListener('load', () => {
-                const canvas = $('#canvas')[0].getContext('2d')
+                /*const canvas = $('#canvas')[0].getContext('2d')
                 canvas.width = musicImg.width
                 canvas.height = musicImg.height
                 canvas.drawImage(musicImg, 0, 0)
@@ -134,7 +140,8 @@ function GetImg(id) {
                 //}
                 //else {
                 $('body').css('background-color', arr[0].rgba)
-                //}
+                //}*/
+                $('body').css('background-color', `rgb(${colorfulimg(musicImg).r}, ${colorfulimg(musicImg).g}, ${colorfulimg(musicImg).b})`)
             })
 
         })
@@ -145,7 +152,7 @@ function SmtcImg(base64) {
     $('#music-img').attr('src', 'data:image/png;base64,' + base64)
     const musicImg = $('#music-img')[0]
     musicImg.addEventListener('load', () => {
-        const canvas = $('#canvas')[0].getContext('2d')
+        /*const canvas = $('#canvas')[0].getContext('2d')
         canvas.width = musicImg.width
         canvas.height = musicImg.height
         canvas.drawImage(musicImg, 0, 0)
@@ -170,7 +177,8 @@ function SmtcImg(base64) {
         }
         arr = arr.sort((a, b) => b.num - a.num)
         console.log(arr)
-        $('body').css('background-color', arr[0].rgba)
+        $('body').css('background-color', arr[0].rgba)*/
+        $('body').css('background-color', `rgb(${colorfulimg(musicImg).r}, ${colorfulimg(musicImg).g}, ${colorfulimg(musicImg).b})`)
     })
 }
 
