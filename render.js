@@ -151,6 +151,9 @@ function GetImg(id) {
 function SmtcImg(base64) {
     $('#music-img').attr('src', 'data:image/png;base64,' + base64)
     const musicImg = $('#music-img')[0]
+    musicImg.addEventListener('error', () => {
+        window.location.reload()
+    })
     musicImg.addEventListener('load', () => {
         /*const canvas = $('#canvas')[0].getContext('2d')
         canvas.width = musicImg.width
