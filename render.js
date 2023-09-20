@@ -141,7 +141,24 @@ function GetImg(id) {
                 //else {
                 $('body').css('background-color', arr[0].rgba)
                 //}*/
-                $('body').css('background-color', `rgb(${colorfulimg(musicImg).r}, ${colorfulimg(musicImg).g}, ${colorfulimg(musicImg).b})`)
+                let bc = [colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b]
+                let coefficient = Math.floor(255 / bc.toSorted((a, b) => b - a)[0])
+                let tc = []
+                for (i = 0; i < bc.length; i++) {
+                    if (bc[i] > 127.5) {
+                        tc[i] = Math.floor(bc[i] / 3)
+                    }
+                    else {
+                        if (coefficient < 3) {
+                            tc[i] = bc[i] * coefficient
+                        }
+                        else {
+                            tc[i] = bc[i] * 3
+                        }
+                    }
+                }
+                document.documentElement.style.setProperty('--text-color', `rgb(${tc[0]}, ${tc[1]}, ${tc[2]})`)
+                $('body').css('background-color', `rgb(${bc[0]}}, ${bc[1]}, ${bc[2]})`)
             })
 
         })
@@ -181,6 +198,24 @@ function SmtcImg(base64) {
         arr = arr.sort((a, b) => b.num - a.num)
         console.log(arr)
         $('body').css('background-color', arr[0].rgba)*/
+        let bc = [colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b]
+        let coefficient = Math.floor(255 / bc.toSorted((a, b) => b - a)[0])
+        let tc = []
+        for (i = 0; i < bc.length; i++) {
+            if (bc[i] > 127.5) {
+                tc[i] = Math.floor(bc[i] / 3)
+            }
+            else {
+                if (coefficient < 3) {
+                    tc[i] = bc[i] * coefficient
+                }
+                else {
+                    tc[i] = bc[i] * 3
+                }
+            }
+        }
+        document.documentElement.style.setProperty('--text-color', `rgb(${tc[0]}, ${tc[1]}, ${tc[2]})`)
+        $('body').css('background-color', `rgb(${bc[0]}}, ${bc[1]}, ${bc[2]})`)
         $('body').css('background-color', `rgb(${colorfulimg(musicImg).r}, ${colorfulimg(musicImg).g}, ${colorfulimg(musicImg).b})`)
     })
 }
