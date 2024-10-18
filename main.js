@@ -18,7 +18,7 @@ const createWindow = () => {
         resizable: false,
         alwaysOnTop: true,
         webPreferences: {
-            //preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true,
             enableRemoteModule: true, 
             contextIsolation: false,
@@ -32,7 +32,12 @@ const createWindow = () => {
     })
 
     ipcMain.on('topChange', (event, data) => {
-        win.setAlwaysOnTop(data, 'screen-saver')
+        console.log(data)
+        if (data == "1") {
+            win.setAlwaysOnTop(true, 'screen-saver')
+        } else {
+            win.setAlwaysOnTop(false)
+        }
     })
 
     ipcMain.on('progressChange', (event, data) => {

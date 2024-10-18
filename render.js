@@ -65,11 +65,8 @@ $(document).ready(() => {
         })
     }
 
-    if (obj.sticky == "0") {
-        ipcRenderer.send('topChange', true)
-    } else {
-        ipcRenderer.send('topChange', true)
-    }
+    ipcRenderer.send('topChange', obj.setting.sticky)
+    // window.electronAPI.topChange(obj.sticky)
 })
 
 function SwitchPlayStatus() {

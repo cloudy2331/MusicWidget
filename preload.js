@@ -1,9 +1,9 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    topChange: () => ipcRenderer.send('topChange')
+    topChange: (data) => ipcRenderer.send('topChange', data)
 })
 
-window.addEventListener('DOMContentLoaded', () => {
+// window.addEventListener('DOMContentLoaded', () => {
 
-})
+// })
