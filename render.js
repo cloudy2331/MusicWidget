@@ -141,6 +141,7 @@ function GetImg(id) {
                 //else {
                 $('body').css('background-color', arr[0].rgba)
                 //}*/
+
                 let bc = [colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b]
                 let coefficient = Math.floor(255 / bc.toSorted((a, b) => b - a)[0])
                 let tc = []
@@ -157,6 +158,7 @@ function GetImg(id) {
                         }
                     }
                 }
+
                 document.documentElement.style.setProperty('--text-color', `rgb(${tc[0]}, ${tc[1]}, ${tc[2]})`)
                 $('body').css('background-color', `rgb(${bc[0]}}, ${bc[1]}, ${bc[2]})`)
             })
@@ -198,23 +200,27 @@ function SmtcImg(base64) {
         arr = arr.sort((a, b) => b.num - a.num)
         console.log(arr)
         $('body').css('background-color', arr[0].rgba)*/
+
         let bc = [colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b]
         let coefficient = Math.floor(255 / bc.toSorted((a, b) => b - a)[0])
         let tc = []
-        for (i = 0; i < bc.length; i++) {
-            if (bc[i] > 127.5) {
-                tc[i] = Math.floor(bc[i] / 3)
-            }
-            else {
-                if (coefficient < 3) {
-                    tc[i] = bc[i] * coefficient
-                }
-                else {
-                    tc[i] = bc[i] * 3
-                }
-            }
-        }
-        document.documentElement.style.setProperty('--text-color', `rgb(${tc[0]}, ${tc[1]}, ${tc[2]})`)
+        // for (i = 0; i < bc.length; i++) {
+        //     if (bc[i] > 127.5) {
+        //         tc[i] = Math.floor(bc[i] / 3)
+        //     }
+        //     else {
+        //         if (coefficient < 3) {
+        //             tc[i] = bc[i] * coefficient
+        //         }
+        //         else {
+        //             tc[i] = bc[i] * 3
+        //         }
+        //     }
+        // }
+        let hsl = rgbToHsl(colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b)
+        tc = adjustHsl(hsl.h, hsl.s, hsl.l + 20)
+
+        document.documentElement.style.setProperty('--text-color', `hsl(${tc[0]}, ${tc[1]}%, ${tc[2]}%)`)
         $('body').css('background-color', `rgb(${bc[0]}}, ${bc[1]}, ${bc[2]})`)
         $('body').css('background-color', `rgb(${colorfulimg(musicImg).r}, ${colorfulimg(musicImg).g}, ${colorfulimg(musicImg).b})`)
     })
@@ -222,4 +228,27 @@ function SmtcImg(base64) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function adjustHsl(h, s, l) {
+    return [h, s, l];
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255, g /= 255, b /= 255;
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max == min) {
+        h = s = 0; // achromatic
+    } else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return { h, s, l };
 }
