@@ -1,5 +1,6 @@
 const { app, BrowserWindow, screen, ipcMain, Notification, Tray, Menu, nativeImage, nativeTheme } = require('electron')
 const path = require('path')
+const fs = require('fs')
 //require('electron-reloader')(module)
 
 let tray
@@ -31,7 +32,7 @@ const createWindow = () => {
     })
 
     ipcMain.on('topChange', (event, data) => {
-        //window.setAlwaysOnTop(!win.isAlwaysOnTop, 'screen-saver')
+        win.setAlwaysOnTop(data, 'screen-saver')
     })
 
     ipcMain.on('progressChange', (event, data) => {

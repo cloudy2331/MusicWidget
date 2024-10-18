@@ -64,6 +64,12 @@ $(document).ready(() => {
             }
         })
     }
+
+    if (obj.sticky == "0") {
+        ipcRenderer.send('topChange', true)
+    } else {
+        ipcRenderer.send('topChange', true)
+    }
 })
 
 function SwitchPlayStatus() {

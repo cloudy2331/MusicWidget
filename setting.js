@@ -19,12 +19,14 @@ $(document).ready( () => {
     obj = JSON.parse(json)
     $('#api').val(obj.setting.api)
     $('#music-source').val(obj.setting.musicSource)
+    $('#sticky').val(obj.setting.sticky)
 })
 
 function SaveSetting()
 {
     obj.setting.api = $('#api').val()
     obj.setting.musicSource = $('#music-source').val()
+    obj.setting.sticky = $('#sticky').val()
     json = JSON.stringify(obj)
     fs.writeFile('./config.json', json, (err) => {
         if (err)
