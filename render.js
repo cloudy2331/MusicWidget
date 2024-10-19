@@ -93,15 +93,15 @@ function SwitchPlayStatus() {
 
 function SwitchPlayStatusSmtc() {
     // let child = spawn('./Core/Windows/nircmd/nircmdc.exe sendkeypress 0xb3')
-    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb3'])
+    let child = spawn(path.join('./Core/Windows/nircmd/nircmdc.exe'), ['sendkeypress', '0xb3'])
 }
 
 function NextPlay() {
-    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb0'])
+    let child = spawn(path.join('./Core/Windows/nircmd/nircmdc.exe'), ['sendkeypress', '0xb0'])
 }
 
 function LastPlay() {
-    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb1'])
+    let child = spawn(path.join('./Core/Windows/nircmd/nircmdc.exe'), ['sendkeypress', '0xb1'])
 }
 
 function topChange() {
