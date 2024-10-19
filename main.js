@@ -31,6 +31,10 @@ const createWindow = () => {
         win = null
     })
 
+    ipcMain.on('getLanguage', (event) => {
+        return app.getPreferredSystemLanguages()[0]
+    })
+
     ipcMain.on('topChange', (event, data) => {
         console.log(data)
         if (data == "1") {

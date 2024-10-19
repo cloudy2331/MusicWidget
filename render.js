@@ -1,6 +1,8 @@
 const { ipcRenderer } = require('electron')
 const http = require('http')
 const fs = require('fs')
+const app = require('electron')
+const path = require('path')
 const { spawn, spawnSync } = require('child_process')
 const encoding = require('encoding')
 const colorfulimg = require('colorfulimg')
@@ -9,6 +11,7 @@ let json
 let obj
 let dataCount = 0
 var coreResult = ''
+let audioDevice = 'unknnown device'
 //const textDecoder = new TextDecoder('gb2312')
 
 $(document).ready(() => {
@@ -27,6 +30,7 @@ $(document).ready(() => {
     obj = JSON.parse(json)
 
     if (obj.setting.musicSource == 0) {
+        $('#smtcPlayIcon').css('display', 'none')
         ipcRenderer.on('playMusic', async (event, id, name, artists, url) => {
             $('#music-name').text(name)
             $('#artist').text(artists)
@@ -36,8 +40,9 @@ $(document).ready(() => {
         })
     }
     if (obj.setting.musicSource == 1) {
-        $('#control-bar').css('display', 'none')
-        var child = spawn('./Core/Windows/Release/SmtcNetCore.exe')
+        // $('#control-bar').css('display', 'none')
+        $('#playIcon').css('display', 'none')
+        let child = spawn('./Core/Windows/Release/SmtcNetCore.exe')
 
         child.stdout.on('data', (data) => {
             //coreResult = textDecoder.decode(data)
@@ -47,6 +52,8 @@ $(document).ready(() => {
             splitResult = splitResult.toString()
             splitResult = splitResult.split(',')
             if (splitResult[0] == 'OnAnyMediaPropertyChanged') {
+                $('#music-name').text('loading...').attr('title', 'loading...')
+                $('#artist').text('loading...').attr('title', 'loading...')
                 coreResult = ''
                 coreResult += encoding.convert(data, 'UTF8', 'GBK')
             }
@@ -58,8 +65,13 @@ $(document).ready(() => {
                 console.log(coreResult)
                 splitResult = coreResult.split(',')
                 $('#music-source').html(` <b>·</b> ${splitResult[1]}`)
-                $('#music-name').text(splitResult[2])
-                $('#artist').text(splitResult[3])
+                // if (ipcRenderer.sendSync('getLanguage') == 'zh-Hans-CN') {
+                if (splitResult[1] == 'cloudmusic.exe') {
+                    $('#music-source').html(` <b>·</b> 网易云音乐`)
+                }
+                // }
+                $('#music-name').text(splitResult[2]).attr('title', splitResult[2])
+                $('#artist').text(splitResult[3]).attr('title', splitResult[3])
                 SmtcImg(splitResult[4].slice(0, -1))
             }
         })
@@ -77,6 +89,19 @@ function SwitchPlayStatus() {
     else {
         player.pause()
     }
+}
+
+function SwitchPlayStatusSmtc() {
+    // let child = spawn('./Core/Windows/nircmd/nircmdc.exe sendkeypress 0xb3')
+    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb3'])
+}
+
+function NextPlay() {
+    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb0'])
+}
+
+function LastPlay() {
+    let child = spawn(path.join(__dirname, 'Core', 'Windows', 'nircmd', 'nircmdc.exe'), ['sendkeypress', '0xb1'])
 }
 
 function topChange() {
@@ -98,6 +123,19 @@ function IconControl() {
     else {
         $('#playIcon').attr('class', pauseIcon)
     }
+
+    navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+            devices.forEach(device => {
+                if (device.kind === 'audiooutput' && device.deviceId === 'default') {
+                    $('#sound-device').text(device.label.split('-')[1])
+                    $('#sound-device').attr('title', device.label)
+                }
+            })
+        }).catch(err => {
+            $('#sound-device').text('unknnown device')
+            $('#sound-device').attr('title', 'unknnown device')
+        })
 }
 
 function GetImg(id) {
