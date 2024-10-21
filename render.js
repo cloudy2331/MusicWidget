@@ -259,7 +259,8 @@ function SmtcImg(base64) {
         //     }
         // }
         let hsl = rgbToHsl(colorfulimg(musicImg).r, colorfulimg(musicImg).g, colorfulimg(musicImg).b)
-        tc = adjustHsl(hsl.h, hsl.s, hsl.l + 20)
+        // tc = adjustHsl(hsl.h, hsl.s, hsl.l + 20)
+        tc = adjustHsl(hsl.h, hsl.s, hsl.l + (16.30968 / hsl.l))
 
         document.documentElement.style.setProperty('--text-color', `hsl(${tc[0]}, ${tc[1]}%, ${tc[2]}%)`)
         $('body').css('background-color', `rgb(${bc[0]}}, ${bc[1]}, ${bc[2]})`)
