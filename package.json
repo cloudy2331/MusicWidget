@@ -7,9 +7,11 @@
     "productName": "music_widget",
     "appId": "com.cloudygames.musicwidget",
     "extraFiles": [
-      "./config.json",
-      "./icon.jpg",
-      "./Core"
+      
+    ],
+    "files": [
+      "!example",
+      "!README.md"
     ],
     "asar": false
   },
@@ -31,10 +33,14 @@
       "windows.device.sensors"
     ]
   },
-  "type": "commonjs",
   "author": "cloudy233",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@material/material-color-utilities": "^0.3.0",
+    "chroma-js": "^3.1.2",
     "colorfulimg": "^1.0.2",
     "encoding": "^0.1.13"
   },

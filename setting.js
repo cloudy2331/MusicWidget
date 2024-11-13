@@ -20,6 +20,7 @@ $(document).ready( () => {
     $('#api').val(obj.setting.api)
     $('#music-source').val(obj.setting.musicSource)
     $('#sticky').val(obj.setting.sticky)
+    $('#color-scheme').val(obj.setting.colorScheme)
 })
 
 function SaveSetting()
@@ -27,6 +28,7 @@ function SaveSetting()
     obj.setting.api = $('#api').val()
     obj.setting.musicSource = $('#music-source').val()
     obj.setting.sticky = $('#sticky').val()
+    obj.setting.colorScheme = $('#color-scheme').val()
     json = JSON.stringify(obj)
     fs.writeFile('./config.json', json, (err) => {
         if (err)

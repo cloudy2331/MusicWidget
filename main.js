@@ -1,6 +1,11 @@
 const { app, BrowserWindow, screen, ipcMain, Notification, Tray, Menu, nativeImage, nativeTheme } = require('electron')
 const path = require('path')
 const fs = require('fs')
+let mcu
+import('@material/material-color-utilities').then(module => {
+    mcu = module
+}).catch(console.error)
+// const { getContrastColorFromTheme } = require('@material/material-color-utilities')
 //require('electron-reloader')(module)
 
 let tray
@@ -20,11 +25,11 @@ const createWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true,
-            enableRemoteModule: true, 
+            enableRemoteModule: true,
             contextIsolation: false,
         }
     })
-    
+
     //win.webContents.openDevTools()
 
     win.on('close', () => {
@@ -56,11 +61,28 @@ const createWindow = () => {
     win.loadFile('index.html')
 }
 
+ipcMain.handle('getTextColor', (event, data, ct) => {
+    console.log(ct)
+    let theme = mcu.themeFromSourceColor(mcu.argbFromRgb(data)).schemes.dark.tertiary
+    if (ct == "light") {
+        theme = mcu.themeFromSourceColor(mcu.argbFromRgb(data)).schemes.light.tertiary
+    } else {
+        theme = mcu.themeFromSourceColor(mcu.argbFromRgb(data)).schemes.dark.tertiary
+    }
+
+    console.log(mcu.hexFromArgb(theme))
+    return mcu.hexFromArgb(theme)
+})
+
+ipcMain.handle('getExePath', (event) => {
+    return app.getAppPath('exe')
+})
+
 const createSetting = () => {
     setting = new BrowserWindow({
         webPreferences: {
             nodeIntegration: true,
-            enableRemoteModule: true, 
+            enableRemoteModule: true,
             contextIsolation: false,
         }
     })
@@ -72,7 +94,7 @@ const createPlaylist = () => {
     setting = new BrowserWindow({
         webPreferences: {
             nodeIntegration: true,
-            enableRemoteModule: true, 
+            enableRemoteModule: true,
             contextIsolation: false,
         }
     })
@@ -80,9 +102,27 @@ const createPlaylist = () => {
     setting.loadFile('./playlist.html')
 }
 
+//带参启动
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+    app.quit()
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        console.log('用户正在尝试启动第二个实例')
+        // if (win) {
+        if (commandLine.includes('--settings')) {
+            createSetting()
+        }
+        // win.focus()
+        // }
+    })
+}
+
+
 app.whenReady().then(() => {
     nativeTheme.themeSource = 'system'
-    const icon = nativeImage.createFromPath('./icon.jpg')
+    // const icon = nativeImage.createFromPath('./icon.jpg')
+    const icon = nativeImage.createFromPath(path.join(__dirname, 'icon.jpg'))
     tray = new Tray(icon)
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -103,7 +143,7 @@ app.whenReady().then(() => {
             type: 'separator'
         },
         {
-            label: '退出', 
+            label: '退出',
             type: 'normal',
             click: () => {
                 app.quit()
@@ -115,15 +155,25 @@ app.whenReady().then(() => {
     tray.setToolTip('music widget')
 
     tray.on('click', () => {
-        if(win == null)
-        {
+        if (win == null) {
             createWindow()
         }
-        else
-        {
+        else {
             win.show()
         }
     })
+
+    //任务栏
+    app.setUserTasks([
+        {
+            program: process.execPath,
+            arguments: '--settings',
+            iconPath: process.execPath,
+            iconIndex: 0,
+            title: '设置',
+            window: 'setting'
+        }
+    ])
 
     createWindow()
 })

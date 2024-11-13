@@ -10,25 +10,33 @@
 </head>
 <body>
     <h1>设置</h1>
-    <div class="div-music-source">
-        <h3>音乐来源</h3>
+    <div>
+        <span>* 修改此选项需要重启挂件窗口</span>
+    </div>
+    <div class="div-music-source option">
+        <h3>音乐来源*</h3>
         <select id="music-source">
             <option value=0>(github)Binaryify/NeteaseCloudMusicApi</option>
             <option value=1>smtc</option>
         </select>
-        <span>切换此项需要重启挂件窗口</span>
     </div>
-    <div class="div-api">
+    <div class="div-api option">
         <h3>API地址</h3>
         <input type="url" id="api"/>
     </div>
-    <div class="div-sticky">
-        <h3>置顶</h3>
+    <div class="div-sticky option">
+        <h3>置顶*</h3>
         <select id="sticky">
             <option value=1>是</option>
             <option value=0>否</option>
         </select>
-        <span>切换此项需要重启挂件窗口</span>
+    </div>
+    <div class="div-color-scheme option">
+        <h3>文本颜色选择方案*</h3>
+        <select id="color-scheme">
+            <option value=0>material(建议)</option>
+            <option value=1>hsl</option>
+        </select>
     </div>
     <div class="bottom-bar">
         <div class="save" onclick="SaveSetting()">
@@ -59,26 +67,33 @@
         background-color: var(--background-color);
         color: var(--text-color);
     }*/
-    .div-music-source
+    body
     {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    .div-music-source select
-    {
-        margin-left: 10px;
+        width: 98vw;
     }
 
-    .div-sticky
+    .option
     {
+        width: 100%;
+        height: 15vh;
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        border-bottom: solid;
+        border-width: 1px;
+        border-color: gray;
     }
-    .div-sticky select
+
+    .option select, .option input
     {
-        margin-left: 10px;
+        width: 50%;
+        height: 50%;
+        font-size: large;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid;
     }
 
     .bottom-bar
